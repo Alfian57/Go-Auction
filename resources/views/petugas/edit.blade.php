@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="page-inner mt--3">
-        <form action="{{ route('petugas.update', ['petuga' => $petugas->id]) }}" method="post">
+        <form action="{{ route('petugas.update', ['petuga' => $petugas->id_15458]) }}" method="post">
             @method('put')
             @csrf
             <input type="hidden" name="old_password_15458" value="{{ $petugas->password_15458 }}">

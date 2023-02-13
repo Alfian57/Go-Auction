@@ -57,11 +57,21 @@ class BarangController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
+        $rules = [
             'nama_15458' => 'required|max:255',
             'harga_awal_15458' => 'required',
             'deskripsi_15458' => 'required',
-        ]);
+        ];
+
+        if ($request->use_image == "on") {
+            $validatedData = $request->validate($rules);
+            $validatedData['image_15458'] = $request->old_image;
+        } else {
+            $rules['image_15458'] = 'required|image';
+            $validatedData = $request->validate($rules);
+
+            $validatedData['image_15458'] = $request->file('image_15458')->store('barang-image');
+        }
 
         Barang::where('id_15458', $id)->update($validatedData);
         toast('Data Telah Diperbarui', 'success');

@@ -42,13 +42,11 @@ Route::group(['middleware' => 'auth:petugas'], function () {
     Route::resource('/masyarakat', MasyarakatController::class)->except('show');
     Route::resource('/petugas', PetugasController::class)->except('show');
     Route::resource('/barang', BarangController::class)->except('show');
-    Route::resource('/lelang', LelangController::class)->only('index', 'show', 'create', 'store');
-    Route::post('/lelang/{idLelang}/history-lelang/{idHistory}', [HistoryLelangController::class, 'winner'])->name('history.pemenang');
-    Route::get('/lelang/{idLelang}/history-lelang/create', [HistoryLelangController::class, 'create'])->name('history.create');
-    Route::post('/lelang/{idLelang}/history-lelang', [HistoryLelangController::class, 'store'])->name('history.store');
-});
 
-
-Route::get('/test', function () {
-    return view('test');
+    Route::group(['middleware' => 'is-petugas'], function () {
+        Route::resource('/lelang', LelangController::class)->only('index', 'show', 'create', 'store');
+        Route::post('/lelang/{idLelang}/history-lelang/{idHistory}', [HistoryLelangController::class, 'winner'])->name('history.pemenang');
+        Route::get('/lelang/{idLelang}/history-lelang/create', [HistoryLelangController::class, 'create'])->name('history.create');
+        Route::post('/lelang/{idLelang}/history-lelang', [HistoryLelangController::class, 'store'])->name('history.store');
+    });
 });

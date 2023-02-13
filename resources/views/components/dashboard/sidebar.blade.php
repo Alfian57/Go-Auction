@@ -42,12 +42,14 @@
                 <li class="nav-section">
                     <h4 class="text-section">Data Sistem</h4>
                 </li>
-                <li class="nav-item @if (Request::is('lelang*')) active @endif">
-                    <a href="{{ route('lelang.index') }}">
-                        <img src="/assets/img/lelang.png" alt="Lelang Icon" class="img-fluid icon">
-                        <p class="px-3">Data Lelang</p>
-                    </a>
-                </li>
+                @if (auth()->guard('petugas')->user()->level->nama_15458 == 'petugas')
+                    <li class="nav-item @if (Request::is('lelang*')) active @endif">
+                        <a href="{{ route('lelang.index') }}">
+                            <img src="/assets/img/lelang.png" alt="Lelang Icon" class="img-fluid icon">
+                            <p class="px-3">Data Lelang</p>
+                        </a>
+                    </li>
+                @endif
                 <li class="nav-item @if (Request::is('barang*')) active @endif">
                     <a href="{{ route('barang.index') }}">
                         <img src="/assets/img/barang.png" alt="Petugas Icon" class="img-fluid icon">
